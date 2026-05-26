@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Marcus Pereira — Portfólio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --ink: #141414;
+    --ink-soft: #4a4644;
+    --ink-mute: #8c867f;
+    --rule: #d9d3c8;
+    --rule-soft: #eae5da;
+    --accent: oklch(0.40 0.09 25);
+    --accent-soft: oklch(0.40 0.09 25 / 0.10);
+    --serif: "Newsreader", "Times New Roman", "Liberation Serif", serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --pad-x: clamp(28px, 6vw, 96px);
+    --pad-top: clamp(88px, 13vh, 150px);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: var(--serif);
+    font-optical-sizing: auto;
+    font-size: 17.5px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+  }
+  ::selection { background: var(--accent); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Navbar ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 22px var(--pad-x);
+    background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .nav::after {
+    content: ""; position: absolute;
+    left: var(--pad-x); right: var(--pad-x); bottom: 0;
+    height: 1px; background: var(--rule-soft);
+  }
+  .nav-brand { font-style: italic; font-size: 19px; letter-spacing: 0.01em; cursor: default; }
+  .nav-brand .amp { color: var(--ink-mute); margin: 0 6px; font-style: normal; }
+  .nav-links { display: flex; gap: 30px; }
+  .nav-link {
+    position: relative; cursor: default;
+    font-size: 16px; color: var(--ink-soft);
+    padding: 4px 1px; transition: color .25s ease;
+  }
+  .nav-link .num {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--ink-mute); margin-right: 8px;
+    vertical-align: 1px; letter-spacing: 0.04em;
+  }
+  .nav-link::after {
+    content: ""; position: absolute; left: 0; right: 100%;
+    bottom: -2px; height: 1px; background: var(--accent);
+    transition: right .35s cubic-bezier(.7,0,.2,1);
+  }
+  .nav-link:hover { color: var(--ink); }
+  .nav-link:hover::after { right: 0; }
+  .nav-link.active { color: var(--ink); }
+  .nav-link.active::after { right: 0; }
+
+  /* ── Page ── */
+  .page {
+    min-height: 100vh;
+    padding: var(--pad-top) var(--pad-x) 160px;
+    opacity: 0;
+    animation: pageIn .55s cubic-bezier(.4,0,.15,1) forwards;
+  }
+  @keyframes pageIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ── Type utilities ── */
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-mute); }
+  .display { font-family: var(--serif); font-size: clamp(56px, 9vw, 132px); line-height: 0.96; letter-spacing: -0.02em; font-weight: 500; margin: 0; font-variation-settings: "opsz" 72; }
+  .display .it { font-style: italic; color: var(--accent); }
+  .lede { font-size: clamp(20px, 1.8vw, 26px); line-height: 1.45; color: var(--ink-soft); max-width: 52ch; font-style: italic; }
+
+  /* ── Hamburger button (hidden on desktop) ── */
+  .nav-burger {
+    display: none;
+    appearance: none; background: transparent; border: 0;
+    padding: 8px; margin: -8px;
+    cursor: pointer; color: var(--ink);
+    flex-direction: column; gap: 5px; align-items: center; width: 40px;
+  }
+  .nav-burger span {
+    display: block; width: 22px; height: 1.5px;
+    background: currentColor;
+    transition: transform .28s ease, opacity .28s ease;
+    transform-origin: center;
+  }
+  .nav-burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ── Mobile backdrop ── */
+  .nav-backdrop { display: none; }
+
+  /* ── Mobile breakpoints ── */
+  @media (max-width: 560px) {
+    :root { --pad-top: clamp(68px, 11vh, 90px); }
+
+    .nav { align-items: center; padding: 16px var(--pad-x); }
+    .nav-brand { font-size: 16px; }
+    .nav-brand .subtitle { display: none; }
+
+    /* desktop links hidden; burger shown */
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule-soft);
+      box-shadow: 0 8px 24px rgba(0,0,0,.07);
+      padding: 8px var(--pad-x) 28px;
+      gap: 0;
+      animation: menuIn .22s cubic-bezier(.4,0,.15,1) forwards;
+    }
+    @keyframes menuIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .nav-link {
+      font-size: 20px; padding: 16px 0;
+      border-bottom: 1px solid var(--rule-soft);
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .nav-link:last-child { border-bottom: none; }
+    .nav-link .num { display: inline; }
+    .nav-link::after { display: none; }
+
+    .nav-burger { display: flex; }
+
+    .nav-backdrop {
+      display: block;
+      position: fixed; inset: 0; z-index: 48;
+      background: rgba(0,0,0,.12);
+      animation: bdIn .22s ease;
+    }
+    @keyframes bdIn { from { opacity: 0; } to { opacity: 1; } }
+  }
+  @media (max-width: 380px) {
+    :root { --pad-x: 18px; }
+  }
+
+  /* ── Print (CV em PDF) ── */
+  @media print {
+    .nav, .twk-panel { display: none !important; }
+    .page { padding-top: 24px; animation: none; opacity: 1; }
+    body { font-size: 14px; }
+  }
+</style>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+// ─── Tweaks panel ─────────────────────────────────────────────────────────────
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;overflow-x:hidden;min-height:0;scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");background-repeat:no-repeat;background-position:right 8px center}
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;overflow-wrap:anywhere}
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
+  .twk-btn:hover{background:rgba(0,0,0,.88)}
+  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
+  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues(prev => ({ ...prev, ...edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+function TweaksPanel({ title = 'Tweaks', children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+  const clamp = React.useCallback(() => {
+    const el = dragRef.current; if (!el) return;
+    const maxR = Math.max(PAD, window.innerWidth - el.offsetWidth - PAD);
+    const maxB = Math.max(PAD, window.innerHeight - el.offsetHeight - PAD);
+    offsetRef.current = { x: Math.min(maxR, Math.max(PAD, offsetRef.current.x)), y: Math.min(maxB, Math.max(PAD, offsetRef.current.y)) };
+    el.style.right = offsetRef.current.x + 'px'; el.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+  React.useEffect(() => {
+    if (!open) return;
+    clamp();
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(clamp) : null;
+    if (ro) ro.observe(document.documentElement); else window.addEventListener('resize', clamp);
+    return () => { if (ro) ro.disconnect(); else window.removeEventListener('resize', clamp); };
+  }, [open, clamp]);
+  React.useEffect(() => {
+    const onMsg = e => { const t = e?.data?.type; if (t === '__activate_edit_mode') setOpen(true); else if (t === '__deactivate_edit_mode') setOpen(false); };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+  const dismiss = () => { setOpen(false); window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); };
+  const onDragStart = e => {
+    const el = dragRef.current; if (!el) return;
+    const r = el.getBoundingClientRect(), sx = e.clientX, sy = e.clientY;
+    const sr = window.innerWidth - r.right, sb = window.innerHeight - r.bottom;
+    const move = ev => { offsetRef.current = { x: sr - (ev.clientX - sx), y: sb - (ev.clientY - sy) }; clamp(); };
+    const up = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up); };
+    window.addEventListener('mousemove', move); window.addEventListener('mouseup', up);
+  };
+  if (!open) return null;
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel" style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" onMouseDown={e => e.stopPropagation()} onClick={dismiss}>✕</button>
+        </div>
+        <div className="twk-body">{children}</div>
+      </div>
+    </>
+  );
+}
+
+function TweakSection({ label }) { return <div className="twk-sect">{label}</div>; }
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl"><span>{label}</span>{value != null && <span className="twk-val">{value}</span>}</div>
+      {children}
+    </div>
+  );
+}
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'} role="switch" aria-checked={!!value} onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+function TweakSelect({ label, value, options, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <select className="twk-field" value={value} onChange={e => onChange(e.target.value)}>
+        {options.map(o => { const v = typeof o === 'object' ? o.value : o; const l = typeof o === 'object' ? o.label : o; return <option key={v} value={v}>{l}</option>; })}
+      </select>
+    </TweakRow>
+  );
+}
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  const valueRef = React.useRef(value); valueRef.current = value;
+  const labelLen = o => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  if (maxLen > ({ 2: 16, 3: 10 }[options.length] ?? 0)) {
+    const resolve = s => { const m = options.find(o => String(typeof o === 'object' ? o.value : o) === s); return m === undefined ? s : typeof m === 'object' ? m.value : m; };
+    return <TweakSelect label={label} value={value} options={options} onChange={s => onChange(resolve(s))} />;
+  }
+  const opts = options.map(o => typeof o === 'object' ? o : { value: o, label: o });
+  const idx = Math.max(0, opts.findIndex(o => o.value === value));
+  const n = opts.length;
+  const segAt = clientX => { const r = trackRef.current.getBoundingClientRect(); const i = Math.floor(((clientX - r.left - 2) / (r.width - 4)) * n); return opts[Math.max(0, Math.min(n - 1, i))].value; };
+  const onPointerDown = e => {
+    setDragging(true);
+    const v0 = segAt(e.clientX); if (v0 !== valueRef.current) onChange(v0);
+    const move = ev => { if (!trackRef.current) return; const v = segAt(ev.clientX); if (v !== valueRef.current) onChange(v); };
+    const up = () => { setDragging(false); window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+    window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+  };
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown} className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb" style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`, width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map(o => <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>{o.label}</button>)}
+      </div>
+    </TweakRow>
+  );
+}
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#',''); const x = h.length === 3 ? h.replace(/./g, c => c+c) : h.padEnd(6,'0');
+  const n = parseInt(x.slice(0,6),16); if (Number.isNaN(n)) return true;
+  const r=(n>>16)&255, g=(n>>8)&255, b=n&255; return r*299+g*587+b*114 > 148000;
+}
+const TwkCheck = ({ light }) => (
+  <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} /></svg>
+);
+function TweakColor({ label, value, options, onChange }) {
+  if (!options?.length) return (
+    <div className="twk-row twk-row-h"><div className="twk-lbl"><span>{label}</span></div><input type="color" className="twk-swatch" value={value} onChange={e => onChange(e.target.value)} /></div>
+  );
+  const key = o => String(JSON.stringify(o)).toLowerCase(); const cur = key(value);
+  return (
+    <TweakRow label={label}>
+      <div className="twk-chips" role="radiogroup">
+        {options.map((o, i) => { const colors = Array.isArray(o) ? o : [o]; const [hero, ...rest] = colors; const on = key(o) === cur;
+          return <button key={i} type="button" className="twk-chip" role="radio" aria-checked={on} data-on={on?'1':'0'} style={{ background: hero }} onClick={() => onChange(o)}>{on && <TwkCheck light={__twkIsLight(hero)} />}</button>; })}
+      </div>
+    </TweakRow>
+  );
+}
+function TweakButton({ label, onClick, secondary = false }) {
+  return <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'} onClick={onClick}>{label}</button>;
+}
+
+// ─── Resume ───────────────────────────────────────────────────────────────────
+function Resume({ density, showPhoto }) {
+  const gap = density === 'spacious' ? 72 : density === 'compact' ? 28 : 44;
+
+  return (
+    <div className="page">
+      <style>{`
+        .resume-grid { display:grid; grid-template-columns:1fr; gap:80px; }
+        .resume-hero {
+          display:grid;
+          grid-template-columns:${showPhoto ? 'minmax(0,1fr) 280px' : '1fr'};
+          gap:64px; align-items:end;
+          padding-bottom:64px; border-bottom:1px solid var(--rule-soft);
+        }
+        .resume-hero .meta { display:flex; flex-direction:column; gap:18px; padding-bottom:10px; }
+        .resume-hero .meta .row { display:grid; grid-template-columns:100px 1fr; gap:20px; align-items:baseline; padding:12px 0; border-top:1px solid var(--rule-soft); font-size:15px; }
+        .resume-hero .meta .row:last-child { border-bottom:1px solid var(--rule-soft); }
+        .resume-hero .meta .k { font-family:var(--mono); font-size:10.5px; color:var(--ink-mute); letter-spacing:0.12em; text-transform:uppercase; }
+        .resume-hero .meta .v { color:var(--ink); font-style:italic; }
+        .photo { aspect-ratio:4/5; background:var(--rule-soft); overflow:hidden; }
+        .photo img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(100%) contrast(1.02); transition:filter .4s ease; }
+        .photo:hover img { filter:grayscale(0%); }
+        .hero-actions { margin-top:36px; display:flex; gap:22px; flex-wrap:wrap; font-family:var(--mono); font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; }
+        .hero-actions a { display:inline-flex; align-items:baseline; gap:8px; color:var(--ink); border-bottom:1px solid var(--ink); padding:8px 0; transition:color .25s ease, border-color .25s ease, gap .25s ease; }
+        .hero-actions a:hover { color:var(--accent); border-color:var(--accent); gap:14px; }
+        .section { display:grid; grid-template-columns:180px 1fr; gap:48px; align-items:start; }
+        .section + .section { margin-top:${gap + 16}px; }
+        .section .label { font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:0.16em; text-transform:uppercase; padding-top:8px; position:sticky; top:84px; }
+        .about p { font-size:clamp(20px,1.7vw,24px); line-height:1.55; margin:0 0 22px; max-width:56ch; color:var(--ink); text-wrap:pretty; }
+        .about p:last-child { margin-bottom:0; color:var(--ink-soft); }
+        .about .drop::first-letter { font-size:4.4em; line-height:0.82; float:left; padding:6px 14px 0 0; font-style:italic; color:var(--accent); }
+        .job { display:grid; grid-template-columns:120px 1fr auto; gap:28px; align-items:baseline; padding:${gap/2}px 0; border-top:1px solid var(--rule-soft); }
+        .job:last-child { border-bottom:1px solid var(--rule-soft); }
+        .job .year { font-family:var(--mono); font-size:11.5px; color:var(--ink-mute); letter-spacing:0.03em; font-variant-numeric:tabular-nums; padding-top:6px; }
+        .job .role { font-size:22px; line-height:1.25; margin:0 0 6px; font-weight:400; }
+        .job .role em { color:var(--accent); font-style:italic; }
+        .job .where { color:var(--ink-mute); font-style:italic; font-size:15px; }
+        .job .desc { margin:10px 0 0; max-width:58ch; color:var(--ink-soft); font-size:16.5px; line-height:1.6; }
+        .job .place { font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:0.1em; text-transform:uppercase; padding-top:8px; white-space:nowrap; }
+        .skills { columns:2; column-gap:64px; }
+        .skill-group { break-inside:avoid; margin-bottom:28px; }
+        .skill-group h3 { font-size:15px; font-weight:400; font-style:italic; color:var(--ink-mute); margin:0 0 10px; }
+        .skill-group ul { list-style:none; margin:0; padding:0; }
+        .skill-group li { font-size:17px; line-height:1.55; color:var(--ink); }
+        .awards .row { display:grid; grid-template-columns:90px 1fr auto; gap:28px; align-items:baseline; padding:18px 0; border-top:1px solid var(--rule-soft); font-size:16.5px; }
+        .awards .row:last-child { border-bottom:1px solid var(--rule-soft); }
+        .awards .y { font-family:var(--mono); font-size:11.5px; color:var(--ink-mute); }
+        .awards em { font-style:italic; color:var(--accent); }
+        .awards .src { color:var(--ink-mute); font-style:italic; font-size:14px; }
+        @media (max-width:900px) {
+          .resume-hero { grid-template-columns:1fr; }
+          .section { grid-template-columns:1fr; gap:16px; }
+          .section .label { position:static; }
+          .job { grid-template-columns:100px 1fr; }
+          .job .place { grid-column:2; padding-top:4px; }
+          .skills { columns:1; }
+          .awards .row { grid-template-columns:80px 1fr; }
+          .awards .src { grid-column:2; margin-top:-4px; }
+        }
+        @media (max-width:480px) {
+          .resume-grid { gap:48px; }
+          .resume-hero { gap:32px; padding-bottom:40px; }
+          .job { grid-template-columns:1fr; gap:4px; }
+          .job .year { padding-top:0; font-size:11px; }
+          .job .place { display:none; }
+          .job .role { font-size:19px; }
+          .about p { font-size:18px; }
+          .awards .row { grid-template-columns:1fr; gap:4px; padding:14px 0; }
+          .awards .src { margin-top:0; }
+          .hero-actions { gap:14px; }
+          .hero-actions a { font-size:10.5px; }
+        }
+        @media print {
+          .resume-hero { grid-template-columns:1fr; }
+          .section { grid-template-columns:140px 1fr; }
+          .job { grid-template-columns:100px 1fr auto; }
+          .skills { columns:2; }
+        }
+      `}</style>
+
+      <div className="resume-grid">
+        {/* HERO */}
+        <header className="resume-hero">
+          <div>
+            <div className="eyebrow" style={{marginBottom: 24}}>Curriculum Vitæ — 2026</div>
+            <h1 className="display">Marcus<br/>Pereira<span className="it">.</span></h1>
+            <p className="lede" style={{marginTop: 28}}>
+              Desenvolvedor com foco em <em>backend Java</em>.
+              Formação técnica em TI, mais de dois anos em operação
+              de ERP fiscal e administração pública. AWS Cloud Practitioner.
+            </p>
+            <div className="hero-actions">
+              <a href="https://github.com/MarcusSant0s" target="_blank" rel="noreferrer">Repositório <span>↗</span></a>
+              <a href="https://www.linkedin.com/in/marcus-pereira-paulo/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
+              <a href="#" onClick={e => { e.preventDefault(); window.print(); }}>CV em PDF <span>↓</span></a>
+            </div>
+          </div>
+
+          {showPhoto && (
+            <div className="meta">
+              <div className="photo"><img src="assets/marcus.png" alt="Marcus Pereira" /></div>
+              <div className="row"><span className="k">Baseado em</span><span className="v">Caçapava, SP</span></div>
+              <div className="row"><span className="k">Especialidade</span><span className="v">backend Java · AWS</span></div>
+              <div className="row"><span className="k">Idiomas</span><span className="v">pt · en</span></div>
+            </div>
+          )}
+          {!showPhoto && (
+            <div className="meta" style={{paddingTop: 8}}>
+              <div className="row"><span className="k">Baseado em</span><span className="v">Caçapava, SP</span></div>
+              <div className="row"><span className="k">Especialidade</span><span className="v">backend Java · AWS</span></div>
+              <div className="row"><span className="k">Idiomas</span><span className="v">pt · en</span></div>
+              <div className="row"><span className="k">Formação</span><span className="v">CC · Etep Esplanada</span></div>
+            </div>
+          )}
+        </header>
+
+        {/* § 01 Perfil */}
+        <section className="section">
+          <div className="label">§ 01 — Perfil</div>
+          <div className="about">
+            <p className="drop">
+              Atuo em tecnologia desde 2020, quando comecei o técnico
+              em TI. Acumulei mais de dois anos em estágios formais —
+              dois deles operando o ERP fiscal de uma indústria, com
+              responsabilidade direta sobre integridade de dados,
+              conferida em rotinas de auditoria.
+            </p>
+            <p>
+              Hoje concluo a graduação em Ciência da Computação e
+              construo um portfólio em desenvolvimento backend com
+              Java, Spring e AWS. Foco no que envelhece bem: arquitetura
+              limpa, código testado, decisões defensáveis em revisão
+              e sistemas que aguentam produção.
+            </p>
+          </div>
+        </section>
+
+        {/* § 02 Trajetória */}
+        <section className="section">
+          <div className="label">§ 02 — Trajetória</div>
+          <div className="experience">
+            {[
+              { year: '01/2023 — 11/2024',
+                role: <><em>Estágio em TI</em> · Operação de ERP fiscal, Dispemec</>,
+                where: 'indústria', place: 'Caçapava, SP',
+                desc: 'Quase dois anos operando módulos do ERP fiscal da indústria — emissão e validação de notas, conferência contábil, manutenção de cadastros críticos e suporte ao time financeiro. Contato diário com banco de dados, rotinas formais de TI e processos de auditoria.' },
+              { year: '11/2024',
+                role: <>Analista de Sistemas, <em>[Empresa]</em></>,
+                where: 'vínculo CLT', place: '[cidade], SP',
+                desc: 'Curta passagem como analista de sistemas em vínculo CLT. Contrato encerrado por reestruturação interna da empresa, que dispensou a equipe técnica.' },
+              { year: '11/2024 — 12/2024',
+                role: <><em>Desenvolvimento</em>, e-commerce</>,
+                where: 'projeto freelance', place: 'remoto',
+                desc: 'Projeto freelance de e-commerce atendido em paralelo à transição. Escopo, prazo, entrega e comunicação com o cliente conduzidos em primeira pessoa.' },
+              { year: '01/2025 — 04/2025',
+                role: <><em>Estágio em TI</em> · Infraestrutura, Prefeitura de Caçapava</>,
+                where: 'administração pública', place: 'Caçapava, SP',
+                desc: 'Suporte e apoio à infraestrutura interna dos órgãos municipais. Visão prática de como a TI sustenta operações de serviço público, com restrições de compras e cadeias de aprovação distintas do setor privado.' },
+              { year: '05/2025 —',
+                role: <>Operador de maquinário, <em>Volkswagen do Brasil</em></>,
+                where: 'indústria automotiva', place: 'Taubaté, SP',
+                desc: 'Posição atual escolhida pela estabilidade financeira: turno fixo e renda previsível que liberam tempo e foco para projetos pessoais de backend, novas certificações técnicas e a conclusão da graduação em CC — sem pressão imediata por uma vaga em tecnologia.' },
+            ].map((j, i) => (
+              <div className="job" key={i}>
+                <div className="year">{j.year}</div>
+                <div>
+                  <h3 className="role">{j.role}</h3>
+                  <div className="where">{j.where}</div>
+                  <p className="desc">{j.desc}</p>
+                </div>
+                <div className="place">{j.place}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* § 03 Formação */}
+        <section className="section">
+          <div className="label">§ 03 — Formação</div>
+          <div className="experience">
+            {[
+              { year: '02/2023 — 12/2027',
+                role: <>Bacharelado em <em>Ciência da Computação</em></>,
+                where: 'Etep Esplanada', place: 'em curso',
+                desc: 'Formação em andamento, com previsão de conclusão em 2027. Conduzida em paralelo à trajetória profissional.' },
+              { year: '02/2020 — 12/2022',
+                role: <>Técnico em <em>Tecnologia da Informação</em></>,
+                where: 'integrado ao ensino médio', place: 'concluído',
+                desc: 'Três anos de formação técnica: programação, redes, banco de dados e administração de sistemas. Base profissional em TI consolidada antes do ensino superior.' },
+              { year: '01/2020 —',
+                role: <>Inglês <em>técnico e conversacional</em></>,
+                where: 'prática contínua', place: 'desde 2020',
+                desc: 'Mais de cinco anos de prática regular, com foco em conversação desde o início — não apenas leitura técnica. Comunicação profissional em desenvolvimento ativo.' },
+            ].map((j, i) => (
+              <div className="job" key={i}>
+                <div className="year">{j.year}</div>
+                <div>
+                  <h3 className="role">{j.role}</h3>
+                  <div className="where">{j.where}</div>
+                  <p className="desc">{j.desc}</p>
+                </div>
+                <div className="place">{j.place}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* § 04 Competências */}
+        <section className="section">
+          <div className="label">§ 04 — Competências</div>
+          <div className="skills">
+            <div className="skill-group">
+              <h3>desenvolvimento</h3>
+              <ul>
+                <li>Java moderno (8+ → 21)</li>
+                <li>Spring Boot 3</li>
+                <li>APIs REST</li>
+                <li>SQL & modelagem</li>
+                <li>Versionamento (Git)</li>
+              </ul>
+            </div>
+            <div className="skill-group">
+              <h3>infraestrutura</h3>
+              <ul>
+                <li>AWS Cloud Practitioner</li>
+                <li>Docker & containers</li>
+                <li>Operação de ERP fiscal</li>
+                <li>Banco de dados relacional</li>
+              </ul>
+            </div>
+            <div className="skill-group">
+              <h3>contexto</h3>
+              <ul>
+                <li>Indústria</li>
+                <li>Administração pública</li>
+                <li>Projetos independentes</li>
+                <li>Rotinas de auditoria</li>
+              </ul>
+            </div>
+            <div className="skill-group">
+              <h3>idiomas</h3>
+              <ul>
+                <li>Português — nativo</li>
+                <li>Inglês — conversacional</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* § 05 Certificações */}
+        <section className="section">
+          <div className="label">§ 05 — Certificações</div>
+          <div className="awards">
+            {[
+              ['05/2025', <>AWS, <em>Certified Cloud Practitioner</em></>, 'fundamentos de nuvem'],
+              ['12/2022', <>Técnico em <em>Tecnologia da Informação</em></>, 'formação técnica'],
+            ].map(([y, t, src], i) => (
+              <div className="row" key={i}>
+                <div className="y">{y}</div>
+                <div>{t}</div>
+                <div className="src">{src}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div style={{marginTop:80, paddingTop:40, borderTop:'1px solid var(--rule-soft)', display:'flex', justifyContent:'space-between', alignItems:'baseline', fontSize:13, color:'var(--ink-mute)', fontFamily:'var(--mono)', letterSpacing:'0.06em'}}>
+          <span>— fim —</span><span>MMXXVI</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Projects ────────────────────────────────────────────────────────────────
+// ↓ Edit this array to add / update projects
+const PROJECTS = [
+  {
+    num: '01',
+    title: '[Nome do projeto]',
+    subtitle: 'API REST de [domínio]',
+    year: '2026',
+    status: 'em produção',
+    summary: '[Resumo em duas ou três frases. O que o sistema faz, qual problema resolve, e o que torna a implementação interessante do ponto de vista de engenharia.]',
+    stack: ['Java 21', 'Spring Boot 3', 'PostgreSQL', 'Docker', 'AWS'],
+    highlights: [
+      '[Decisão arquitetural relevante]',
+      '[Métrica ou ganho mensurável]',
+      '[Padrão de engenharia aplicado]',
+    ],
+    links: { github: '#', live: null, article: null },
+  },
+  {
+    num: '02',
+    title: '[Nome do projeto]',
+    subtitle: 'Sistema [tipo]',
+    year: '2026',
+    status: 'em desenvolvimento',
+    summary: '[Resumo curto. Foque no que diferencia tecnicamente.]',
+    stack: ['Java 21', 'Spring Boot 3', 'PostgreSQL', 'AWS'],
+    highlights: ['[Destaque técnico 1]', '[Destaque técnico 2]', '[Destaque técnico 3]'],
+    links: { github: '#', live: null, article: null },
+  },
+];
+
+function Projects() {
+  return (
+    <div className="page">
+      <style>{`
+        .projects-hero { max-width:920px; padding-bottom:72px; border-bottom:1px solid var(--rule-soft); margin-bottom:96px; }
+        .projects-hero h1 { font-size:clamp(48px,7vw,110px); line-height:1.0; letter-spacing:-0.02em; margin:16px 0 32px; font-weight:500; font-variation-settings:"opsz" 60; }
+        .projects-hero h1 .it { font-style:italic; color:var(--accent); font-weight:400; }
+        .projects-hero p { font-size:clamp(19px,1.6vw,23px); line-height:1.5; color:var(--ink-soft); font-style:italic; max-width:56ch; margin:0; }
+        .toc-bar { display:grid; grid-template-columns:180px 1fr; gap:48px; padding:20px 0; border-bottom:1px solid var(--rule-soft); margin-bottom:80px; }
+        .toc-bar .lbl { font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:0.16em; text-transform:uppercase; }
+        .toc-bar .toc { display:flex; flex-wrap:wrap; gap:32px; font-size:14.5px; color:var(--ink-soft); }
+        .toc-bar .toc a { display:inline-flex; align-items:baseline; gap:8px; transition:color .25s; }
+        .toc-bar .toc a:hover { color:var(--accent); }
+        .toc-bar .toc a .n { font-family:var(--mono); font-size:11px; color:var(--ink-mute); }
+        .project { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; padding:96px 0; border-top:1px solid var(--rule-soft); }
+        .project:first-of-type { border-top:0; padding-top:0; }
+        .project.right .project-visual { order:2; } .project.right .project-text { order:1; }
+        .project-visual { aspect-ratio:4/3; background:var(--rule-soft); background-image:repeating-linear-gradient(135deg, transparent 0 14px, rgba(0,0,0,.025) 14px 15px); position:relative; overflow:hidden; }
+        .project-visual .ph-label { position:absolute; left:24px; bottom:22px; font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:0.14em; text-transform:uppercase; }
+        .project-visual .ph-badge { position:absolute; right:24px; top:22px; font-family:var(--mono); font-size:10px; color:var(--ink-mute); letter-spacing:0.12em; text-transform:uppercase; padding:5px 10px; border:1px solid var(--rule); background:var(--bg); }
+        .project-meta { display:flex; gap:24px; align-items:baseline; margin-bottom:22px; font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:0.12em; text-transform:uppercase; }
+        .project-meta .num { font-family:var(--serif); font-style:italic; font-size:28px; line-height:1; color:var(--accent); text-transform:none; }
+        .project-meta .status { padding:4px 10px; border:1px solid var(--rule); color:var(--ink-soft); }
+        .project-meta .status.live { color:var(--accent); border-color:var(--accent); }
+        .project-title { font-family:var(--serif); font-size:clamp(34px,4vw,52px); line-height:1.05; letter-spacing:-0.02em; margin:0 0 6px; font-weight:500; }
+        .project-subtitle { font-style:italic; color:var(--accent); font-size:clamp(16px,1.3vw,19px); margin:0 0 24px; }
+        .project-summary { font-size:17.5px; line-height:1.6; color:var(--ink); margin:0 0 32px; max-width:52ch; text-wrap:pretty; }
+        .project-section + .project-section { margin-top:28px; }
+        .project-section .k { display:block; font-family:var(--mono); font-size:10.5px; color:var(--ink-mute); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:10px; }
+        .project-stack { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:4px 18px; font-size:15.5px; }
+        .project-stack li:not(:last-child)::after { content:" ·"; color:var(--rule); margin-left:18px; }
+        .project-highlights { list-style:none; margin:0; padding:0; counter-reset:hl; }
+        .project-highlights li { counter-increment:hl; display:grid; grid-template-columns:28px 1fr; gap:14px; align-items:baseline; padding:10px 0; border-top:1px solid var(--rule-soft); font-size:15.5px; line-height:1.5; color:var(--ink-soft); }
+        .project-highlights li:last-child { border-bottom:1px solid var(--rule-soft); }
+        .project-highlights li::before { content:counter(hl,decimal-leading-zero); font-family:var(--mono); font-size:10.5px; color:var(--ink-mute); padding-top:4px; }
+        .project-links { margin-top:36px; display:flex; gap:22px; flex-wrap:wrap; font-family:var(--mono); font-size:12px; letter-spacing:0.08em; }
+        .project-links a { display:inline-flex; align-items:baseline; gap:6px; padding:10px 16px 10px 0; color:var(--ink); border-bottom:1px solid var(--ink); text-transform:uppercase; transition:color .25s, border-color .25s, padding-right .25s; }
+        .project-links a:hover { color:var(--accent); border-color:var(--accent); padding-right:24px; }
+        .project-links a.disabled { color:var(--ink-mute); border-color:var(--rule-soft); text-decoration:line-through; text-decoration-color:var(--rule); pointer-events:none; }
+        .add-slot { margin-top:80px; padding:64px 32px; border:1.5px dashed var(--rule); text-align:center; color:var(--ink-mute); font-style:italic; font-size:16.5px; }
+        .add-slot .plus { display:block; font-family:var(--serif); font-size:36px; margin-bottom:12px; font-style:normal; font-weight:400; }
+        .add-slot small { display:block; margin-top:8px; font-family:var(--mono); font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; font-style:normal; }
+        @media (max-width:860px) {
+          .project { grid-template-columns:1fr; gap:36px; padding:64px 0; }
+          .project.right .project-visual { order:1; } .project.right .project-text { order:2; }
+          .toc-bar { grid-template-columns:1fr; gap:12px; }
+        }
+        @media (max-width:480px) {
+          .projects-hero { margin-bottom:56px; padding-bottom:48px; }
+          .project { padding:48px 0; gap:24px; }
+          .project-visual { aspect-ratio:16/9; }
+          .add-slot { padding:40px 20px; }
+        }
+      `}</style>
+
+      <header className="projects-hero">
+        <div className="eyebrow">Trabalhos selecionados · 2026</div>
+        <h1>Projetos <span className="it">em produção</span>.</h1>
+        <p>Estudos de caso dos sistemas que estou construindo — arquitetura, decisões técnicas e o que funcionou em produção.</p>
+      </header>
+
+      <div className="toc-bar">
+        <div className="lbl">§ Índice</div>
+        <div className="toc">
+          {PROJECTS.map(p => (
+            <a key={p.num} href={'#p'+p.num} onClick={e => { e.preventDefault(); document.getElementById('p'+p.num)?.scrollIntoView({block:'start'}); }}>
+              <span className="n">{p.num}</span><span>{p.title}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {PROJECTS.map((p, i) => (
+        <article key={p.num} id={'p'+p.num} className={'project ' + (i % 2 === 0 ? 'left' : 'right')}>
+          <div className="project-visual">
+            <span className="ph-badge">mockup</span>
+            <span className="ph-label">screenshot · troque por imagem</span>
+          </div>
+          <div className="project-text">
+            <div className="project-meta">
+              <span className="num">{p.num}</span>
+              <span>{p.year}</span>
+              <span className={'status ' + (p.status === 'em produção' ? 'live' : '')}>{p.status}</span>
+            </div>
+            <h2 className="project-title">{p.title}</h2>
+            <p className="project-subtitle">{p.subtitle}</p>
+            <p className="project-summary">{p.summary}</p>
+            <div className="project-section">
+              <span className="k">Stack</span>
+              <ul className="project-stack">{p.stack.map((s, j) => <li key={j}>{s}</li>)}</ul>
+            </div>
+            <div className="project-section">
+              <span className="k">Destaques técnicos</span>
+              <ul className="project-highlights">{p.highlights.map((h, j) => <li key={j}>{h}</li>)}</ul>
+            </div>
+            <div className="project-links">
+              <a href={p.links.github || '#'} target="_blank" rel="noreferrer" className={p.links.github ? '' : 'disabled'}>Repositório ↗</a>
+              <a href={p.links.live || '#'} target="_blank" rel="noreferrer" className={p.links.live ? '' : 'disabled'}>{p.links.live ? 'Live demo ↗' : 'sem demo'}</a>
+              <a href={p.links.article || '#'} target="_blank" rel="noreferrer" className={p.links.article ? '' : 'disabled'}>{p.links.article ? 'Case study ↗' : 'sem artigo'}</a>
+            </div>
+          </div>
+        </article>
+      ))}
+
+      <div className="add-slot">
+        <span className="plus">+</span>
+        Espaço reservado para próximos projetos.
+        <small>edite o array PROJECTS no topo do script</small>
+      </div>
+
+      <div style={{marginTop:96, paddingTop:40, borderTop:'1px solid var(--rule-soft)', display:'flex', justifyContent:'space-between', alignItems:'baseline', fontSize:13, color:'var(--ink-mute)', fontFamily:'var(--mono)', letterSpacing:'0.06em'}}>
+        <span>— em curso —</span><span>MMXXVI</span>
+      </div>
+    </div>
+  );
+}
+
+// ─── Contact ─────────────────────────────────────────────────────────────────
+const SOCIALS = [
+  { name: 'LinkedIn', handle: 'in/marcus-pereira-paulo', href: 'https://www.linkedin.com/in/marcus-pereira-paulo/', note: 'experiência, projetos, trabalho' },
+  { name: 'GitHub',   handle: 'MarcusSant0s',            href: 'https://github.com/MarcusSant0s',                  note: 'repositórios & open source' },
+  { name: 'Email',    handle: 'marcus.pereira.paulo',    href: 'mailto:marcus.pereira.paulo@gmail.com',             note: 'para conversas mais longas' },
+];
+
+function Contact() {
+  const [copied, setCopied] = React.useState(false);
+  const copyEmail = () => {
+    navigator.clipboard.writeText('marcus.pereira.paulo@gmail.com')
+      .then(() => { setCopied(true); setTimeout(() => setCopied(false), 1600); })
+      .catch(() => {});
+  };
+
+  return (
+    <div className="page">
+      <style>{`
+        .contact-grid { display:grid; grid-template-columns:1fr; max-width:1200px; margin:0 auto; }
+        .contact-hero { padding-bottom:96px; border-bottom:1px solid var(--rule-soft); }
+        .contact-hero .eyebrow { margin-bottom:24px; }
+        .contact-hero h1 { font-size:clamp(48px,7vw,110px); line-height:1.0; letter-spacing:-0.02em; margin:0 0 36px; font-weight:400; }
+        .contact-hero h1 .it { font-style:italic; color:var(--accent); }
+        .email-card { display:inline-flex; align-items:baseline; gap:18px; padding:22px 28px 22px 30px; border:1px solid var(--rule); background:var(--bg); font-family:var(--serif); font-size:clamp(22px,2.3vw,32px); letter-spacing:-0.005em; cursor:default; position:relative; transition:border-color .25s, background .25s; }
+        .email-card:hover { border-color:var(--accent); background:var(--accent-soft); }
+        .email-card .at { color:var(--accent); font-style:italic; }
+        .email-card .copy { font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:0.14em; text-transform:uppercase; padding-left:18px; border-left:1px solid var(--rule-soft); align-self:stretch; display:flex; align-items:center; transition:color .25s; }
+        .email-card:hover .copy { color:var(--accent); }
+        .copied-flash { position:absolute; top:-28px; right:0; font-family:var(--mono); font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); opacity:0; transform:translateY(4px); transition:opacity .25s, transform .25s; pointer-events:none; }
+        .copied-flash.on { opacity:1; transform:none; }
+        .secondary { margin-top:36px; display:flex; gap:56px; flex-wrap:wrap; font-size:16.5px; }
+        .secondary .item .k { display:block; font-family:var(--mono); font-size:10.5px; color:var(--ink-mute); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:6px; }
+        .secondary .item .v { font-style:italic; }
+        .channels { padding:80px 0 40px; display:grid; grid-template-columns:240px 1fr; gap:48px; }
+        .channels .label { font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:0.16em; text-transform:uppercase; padding-top:16px; }
+        .channel-list { display:flex; flex-direction:column; }
+        .channel { display:grid; grid-template-columns:minmax(140px,0.6fr) minmax(180px,1fr) 1.2fr auto; gap:32px; align-items:baseline; padding:22px 6px; border-top:1px solid var(--rule-soft); position:relative; transition:padding .35s cubic-bezier(.4,0,.15,1); }
+        .channel:last-child { border-bottom:1px solid var(--rule-soft); }
+        .channel::before { content:""; position:absolute; left:0; top:-1px; height:calc(100% + 1px); width:0; background:var(--accent); transition:width .35s cubic-bezier(.4,0,.15,1); }
+        .channel:hover { padding-left:22px; }
+        .channel:hover::before { width:3px; }
+        .channel .n { font-size:24px; line-height:1; letter-spacing:-0.005em; font-weight:400; }
+        .channel:hover .n { font-style:italic; color:var(--accent); }
+        .channel .h { font-family:var(--mono); font-size:13px; color:var(--ink-soft); letter-spacing:0.02em; }
+        .channel .note { font-style:italic; color:var(--ink-mute); font-size:15.5px; }
+        .channel .arrow { font-family:var(--mono); font-size:14px; color:var(--ink-mute); transform:translateX(-6px); opacity:0; transition:opacity .3s, transform .3s; }
+        .channel:hover .arrow { opacity:1; transform:none; color:var(--accent); }
+        .colophon { margin-top:96px; padding-top:36px; border-top:1px solid var(--rule-soft); display:grid; grid-template-columns:240px 1fr; gap:48px; font-size:14.5px; color:var(--ink-soft); }
+        .colophon .label { font-family:var(--mono); font-size:11px; color:var(--ink-mute); letter-spacing:0.16em; text-transform:uppercase; }
+        .colophon p { margin:0; max-width:64ch; font-style:italic; line-height:1.6; }
+        .colophon p + p { margin-top:12px; }
+        @media (max-width:760px) {
+          .channels, .colophon { grid-template-columns:1fr; gap:18px; }
+          .channel { grid-template-columns:1fr; gap:6px; }
+          .channel:hover { padding-left:14px; }
+          .secondary { gap:28px; }
+          .email-card { flex-wrap:wrap; gap:12px; padding:18px 20px; font-size:clamp(16px,4vw,24px); }
+          .email-card .copy { padding-left:0; border-left:none; border-top:1px solid var(--rule-soft); padding-top:10px; width:100%; }
+        }
+        @media (max-width:480px) {
+          .contact-hero h1 { font-size:clamp(40px,11vw,80px); }
+          .secondary { flex-direction:column; gap:16px; }
+          .channel .note { display:none; }
+        }
+      `}</style>
+
+      <div className="contact-grid">
+        <section className="contact-hero">
+          <div className="eyebrow">Vamos conversar</div>
+          <h1>Por <span className="it">aqui</span>,<br/>ou por <span className="it">lá</span>.</h1>
+          <div onClick={copyEmail} className="email-card" role="button" tabIndex={0} onKeyDown={e => e.key === 'Enter' && copyEmail()}>
+            <span>marcus.pereira.paulo<span className="at">@</span>gmail.com</span>
+            <span className="copy">{copied ? 'copiado' : 'copiar'}</span>
+            <span className={'copied-flash ' + (copied ? 'on' : '')}>endereço na área de transferência</span>
+          </div>
+          <div className="secondary">
+            <div className="item"><span className="k">Localização</span><span className="v">Caçapava, SP — Brasil</span></div>
+            <div className="item"><span className="k">Atuação</span><span className="v">Volkswagen</span></div>
+            <div className="item"><span className="k">Fuso</span><span className="v">GMT-3 · São Paulo</span></div>
+            <div className="item"><span className="k">Aberto a</span><span className="v">oportunidades backend Java</span></div>
+          </div>
+        </section>
+
+        <section className="channels">
+          <div className="label">§ Em outros lugares</div>
+          <div className="channel-list">
+            {SOCIALS.map((s, i) => (
+              <a key={i} href={s.href} className="channel" target="_blank" rel="noreferrer">
+                <span className="n">{s.name}</span>
+                <span className="h">{s.handle}</span>
+                <span className="note">{s.note}</span>
+                <span className="arrow">↗</span>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        <section className="colophon">
+          <div className="label">§ Cólofon</div>
+          <div>
+            <p>Este site foi composto em Newsreader, sobre fundo creme, em um único arquivo HTML. Nenhum framework de build, nenhum cookie, nenhuma dependência além das fontes.</p>
+            <p>Marcus Paulo Pereira de Oliveira — última atualização em maio de 2026.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+// ─── App ─────────────────────────────────────────────────────────────────────
+const PAGES = [
+  { id: 'cv',       num: '01', label: 'Currículo' },
+  { id: 'projects', num: '02', label: 'Projetos'  },
+  { id: 'contact',  num: '03', label: 'Contato'   },
+];
+
+const TWEAKS = {
+  accent:     '#7a1f1f',
+  density:    'regular',
+  showPhoto:  true,
+  background: '#fbfaf7',
+};
+
+function hexToRgba(hex, a) {
+  const h = hex.replace('#','');
+  const n = h.length === 3 ? h.split('').map(c => c+c).join('') : h;
+  const r = parseInt(n.slice(0,2),16), g = parseInt(n.slice(2,4),16), b = parseInt(n.slice(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAKS);
+  const [pageId, setPageId] = React.useState(() => {
+    const h = (location.hash || '').replace('#','');
+    return PAGES.find(p => p.id === h) ? h : 'cv';
+  });
+  const [menuOpen, setMenuOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const onHash = () => {
+      const h = (location.hash || '').replace('#','');
+      if (PAGES.find(p => p.id === h)) setPageId(h);
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
+  // Close menu when resizing back to desktop
+  React.useEffect(() => {
+    const onResize = () => { if (window.innerWidth > 560) setMenuOpen(false); };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Prevent body scroll while menu is open
+  React.useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
+  const go = id => {
+    if (id !== pageId) {
+      location.hash = id; setPageId(id);
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+    setMenuOpen(false);
+  };
+
+  React.useEffect(() => {
+    const r = document.documentElement;
+    r.style.setProperty('--accent', t.accent);
+    r.style.setProperty('--accent-soft', hexToRgba(t.accent, 0.10));
+    r.style.setProperty('--bg', t.background);
+  }, [t.accent, t.background]);
+
+  return (
+    <div>
+      {menuOpen && <div className="nav-backdrop" onClick={() => setMenuOpen(false)} />}
+      <nav className="nav">
+        <div className="nav-brand">
+          Marcus Pereira
+          <span className="amp subtitle">·</span>
+          <span className="subtitle" style={{color:'var(--ink-mute)'}}>portfólio MMXXVI</span>
+        </div>
+        <div className={'nav-links' + (menuOpen ? ' open' : '')}>
+          {PAGES.map(p => (
+            <a key={p.id} href={'#'+p.id}
+               onClick={e => { e.preventDefault(); go(p.id); }}
+               className={'nav-link ' + (pageId === p.id ? 'active' : '')}>
+              <span className="num">{p.num}</span>{p.label}
+            </a>
+          ))}
+        </div>
+        <button
+          className={'nav-burger' + (menuOpen ? ' open' : '')}
+          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(m => !m)}
+        >
+          <span /><span /><span />
+        </button>
+      </nav>
+
+      <main key={pageId}>
+        {pageId === 'cv'       && <Resume   density={t.density} showPhoto={t.showPhoto} />}
+        {pageId === 'projects' && <Projects />}
+        {pageId === 'contact'  && <Contact />}
+      </main>
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Cor de acento" />
+        <TweakColor label="Acento" value={t.accent}
+          options={['#7a1f1f','#1f3a7a','#2f5d3a','#b58a2c','#1a1a1a']}
+          onChange={v => setTweak('accent', v)} />
+        <TweakSection label="Fundo" />
+        <TweakColor label="Papel" value={t.background}
+          options={['#fbfaf7','#ffffff','#f3eee2','#ece7d8']}
+          onChange={v => setTweak('background', v)} />
+        <TweakSection label="Layout" />
+        <TweakRadio label="Densidade" value={t.density}
+          options={['compact','regular','spacious']}
+          onChange={v => setTweak('density', v)} />
+        <TweakToggle label="Mostrar retrato" value={t.showPhoto}
+          onChange={v => setTweak('showPhoto', v)} />
+        <TweakSection label="Navegação" />
+        <TweakButton label="Ir para Currículo" onClick={() => go('cv')} />
+        <TweakButton label="Ir para Projetos"  onClick={() => go('projects')} />
+        <TweakButton label="Ir para Contato"   onClick={() => go('contact')} />
+      </TweaksPanel>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
