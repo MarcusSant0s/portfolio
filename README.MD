@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/polar-bear.svg" width="180" />
+  <img src="./assets/polars.svg" width="180" />
 </p>
 
 <h1 align="center">PolarMesh</h1>
